@@ -1,72 +1,89 @@
-# Chest X-ray Multi-label Classification (DenseNet-121)
+# Chest X-Ray Diagnosis — Multi-Label Classification
 
-Beginner-friendly research starter project using the NIH ChestX-ray14 dataset and PyTorch.
+A deep learning portfolio project exploring multi-label classification of chest X-ray images using DenseNet-121, PyTorch, and Streamlit.
 
-## Important limitations
-- This is an educational research project, not a medical device or diagnostic tool.
-- Dataset labels are noisy and performance on a small subset is not evidence of clinical accuracy.
-- Use patient-level train/validation/test splits to reduce leakage.
-- Grad-CAM visualizations are qualitative and do not prove that a model's prediction is correct.
+> **Disclaimer:** This project is intended for educational and research purposes only. It is not a medical device and must not be used for clinical diagnosis or treatment decisions.
 
-## 1. Environment
-Activate your virtual environment, then install requirements:
+## Overview
 
-```bash
-python -m pip install -r requirements.txt
-```
+The application predicts scores for 15 labels based on chest X-ray images: 14 findings from the NIH ChestXray14 label set and an additional `No Finding` label.
 
-On Apple Silicon, check MPS support:
+The project includes a model training pipeline, evaluation scripts, and an interactive Streamlit interface.
 
-```bash
-python -c "import torch; print('Apple MPS available:', torch.backends.mps.is_available())"
-```
+## Technologies
 
-## 2. Download data
-Get the NIH ChestX-ray14 files from https://nihcc.app.box.com/v/ChestXray-Nih . Read the dataset terms and instructions. At minimum, download `Data_Entry_2017.csv` and the image archives you plan to use. Extract images into a folder such as `data/images/`.
+- Python
+- PyTorch and Torchvision
+- DenseNet-121
+- Pandas and NumPy
+- Scikit-learn
+- Streamlit
+- Matplotlib and OpenCV
 
-Expected layout:
+## Features
 
-```text
-data/
-  Data_Entry_2017.csv
-  images/
-    00000001_000.png
-    ...
-```
+- Multi-label chest X-ray classification
+- Model training and checkpoint saving
+- Evaluation using classification metrics
+- Interactive image upload through Streamlit
+- Experimental Grad-CAM visualization
 
-Do not commit the dataset to Git.
+Grad-CAM highlights image regions that influence the model's output. It does not provide lesion segmentation or prove that a disease is present.
 
-## 3. Prepare patient-level splits
-Run from the project root:
+## Dataset
 
-```bash
-python -m src.prepare_data --csv data/Data_Entry_2017.csv --images data/images --out data/processed --limit 1000
-```
+This project uses the NIH ChestXray14 dataset. The dataset and medical images are not included in this repository.
 
-The optional `--limit` is for a small smoke test only. The script creates CSV manifests with patient-level splits and reports missing image files. For serious evaluation, use the full available dataset and a predefined, documented patient-level split.
+Obtain the dataset from its authorized source and follow its applicable terms of use. Configure the processed CSV files and image paths for your local environment.
 
-## 4. Train
+## Installation
 
 ```bash
-python -m src.train --data-dir data/processed --epochs 2 --batch-size 8
+git clone https://github.com/mehdi-bakkali/chest-X-ray-diagnosis-project.git
+cd chest-X-ray-diagnosis-project
+
+python -m venv .venv
+source .venv/bin/activate
+
+pip install -r requirements.txt
 ```
 
-Adjust batch size if you run out of memory. Training defaults to a small number of epochs for a smoke test.
+## Training
 
-## 5. Evaluate
+Run the training script with the path to your processed dataset:
 
 ```bash
-python -m src.evaluate --data-dir data/processed --checkpoint outputs/best_model.pt
+python -m src.train \
+  --data-dir /path/to/processed \
+  --epochs 3 \
+  --batch-size 8 \
+  --workers 0 \
+  --output-dir outputs-15-classes
 ```
 
-## 6. Grad-CAM
+## Run the Application
+
+After training a compatible checkpoint and configuring its path in `app.py`, launch the application:
 
 ```bash
-python -m src.gradcam --data-dir data/processed --checkpoint outputs/best_model.pt --image data/images/00000001_000.png --label Atelectasis
+streamlit run app.py
 ```
 
-Results are exploratory. Report per-label AUROC and threshold-dependent precision/recall/F1, along with class prevalence, split method, uncertainty, and limitations.
+## Evaluation
 
-## Dataset and paper
-- NIH ChestX-ray14: https://nihcc.app.box.com/v/ChestXray-Nih
-- Wang et al., *ChestX-ray8: Hospital-scale Chest X-ray Database and Benchmarks on Weakly-Supervised Classification and Localization of Common Thorax Diseases*: https://arxiv.org/abs/1705.02315
+Evaluation metrics will be documented here once the 15-class model has been evaluated on an independent test set.
+
+Recommended metrics include AUROC and average precision for each label, along with the macro-average across labels. Results should be interpreted in light of class imbalance and dataset limitations.
+
+## Limitations
+
+- Predictions are experimental and are not confirmed diagnoses.
+- The dataset may contain label noise and class imbalance.
+- Performance may vary across patient populations, imaging equipment, and acquisition settings.
+- Prediction scores are not necessarily calibrated probabilities.
+- Grad-CAM visualizations are qualitative and should not be interpreted as medical explanations.
+
+## License
+
+A license for the project code will be added after reviewing the applicable dataset terms and third-party dependencies.
+
