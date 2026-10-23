@@ -1,6 +1,6 @@
 # Chest X-ray Multi-label Classification (DenseNet-121)
 
-Beginner-friendly research/portfolio starter project using the NIH ChestX-ray14 dataset and PyTorch.
+Beginner-friendly research starter project using the NIH ChestX-ray14 dataset and PyTorch.
 
 ## Important limitations
 - This is an educational research project, not a medical device or diagnostic tool.
