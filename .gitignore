@@ -1,0 +1,25 @@
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# Data and medical images
+data/
+processed/
+*.dcm
+*.png
+*.jpg
+*.jpeg
+
+# Model checkpoints and outputs
+*.pt
+*.pth
+outputs/
+outputs-*/
+runs/
+
+# macOS
+.DS_Store
