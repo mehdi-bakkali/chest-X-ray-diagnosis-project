@@ -20,16 +20,6 @@ The project includes a model training pipeline, evaluation scripts, and an inter
 - Streamlit
 - Matplotlib and OpenCV
 
-## Features
-
-- Multi-label chest X-ray classification
-- Model training and checkpoint saving
-- Evaluation using classification metrics
-- Interactive image upload through Streamlit
-- Experimental Grad-CAM visualization
-
-Grad-CAM highlights image regions that influence the model's output. It does not provide lesion segmentation or prove that a disease is present.
-
 ## Dataset
 
 This project uses the NIH ChestXray14 dataset. The dataset and medical images are not included in this repository.
