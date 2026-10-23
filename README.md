@@ -59,11 +59,31 @@ After training a compatible checkpoint and configuring its path in `app.py`, lau
 streamlit run app.py
 ```
 
-## Evaluation
+## Evaluation and Explainability
 
-Evaluation metrics will be documented here once the 15-class model has been evaluated on an independent test set.
+The 15-class DenseNet-121 model will be evaluated on an independent test set using per-label AUROC, precision, recall, and F1-score, together with macro-averaged metrics and class prevalence. Results will be interpreted in the context of class imbalance, data-splitting methodology, uncertainty, and dataset limitations.
 
-Recommended metrics include AUROC and average precision for each label, along with the macro-average across labels. Results should be interpreted in light of class imbalance and dataset limitations.
+Grad-CAM will be used to visualize image regions that may influence the model's predictions. These visualizations are exploratory and do not establish clinical validity.
+
+### Evaluate the Model
+
+```bash
+python -m src.evaluate \
+  --data-dir data/processed \
+  --checkpoint outputs-15-classes/best_model.pt
+```
+
+### Generate Grad-CAM Visualizations
+
+```bash
+python -m src.gradcam \
+  --data-dir data/processed \
+  --checkpoint outputs-15-classes/best_model.pt \
+  --image data/images/00000001_000.png \
+  --label Atelectasis
+```
+
+**Note:** These commands assume that `src.evaluate` and `src.gradcam` are implemented and accept the specified arguments. Update the paths to match your dataset and model checkpoint locations. Evaluation results should be reported only after testing is complete.
 
 ## Limitations
 
