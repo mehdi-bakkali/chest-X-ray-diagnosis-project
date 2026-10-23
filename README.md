@@ -12,13 +12,13 @@ The project includes a model training pipeline, evaluation scripts, and an inter
 
 ## Technologies
 
-- Python
-- PyTorch and Torchvision
-- DenseNet-121
-- Pandas and NumPy
-- Scikit-learn
-- Streamlit
-- Matplotlib and OpenCV
+- **Programming Language:** Python
+- **Deep Learning Frameworks:** PyTorch, Torchvision
+- **Model Architecture:** DenseNet-121
+- **Data Processing:** Pandas, NumPy
+- **Machine Learning Utilities:** Scikit-learn
+- **Web Application:** Streamlit
+- **Image Processing and Visualization:** OpenCV, Matplotlib
 
 ## Dataset
 
